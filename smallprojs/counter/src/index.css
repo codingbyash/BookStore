@@ -1,0 +1,104 @@
+/* General reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Counter container */
+div {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect for entire div */
+div:hover {
+  transform: translateY(-10px);
+}
+
+/* Counter number */
+p,H1 {
+  font-size: 4rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+/* Buttons */
+button {
+  background-color: #ff6f61;
+  color: white;
+  padding: 12px 25px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  background-color: #ff3b2d;
+}
+
+/* Button hover effect */
+button:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.75s ease;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+button:hover:before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Specific styles for each button */
+button.add {
+  background-color: #6bcf63;
+}
+
+button.add:hover {
+  background-color: #4caf50;
+}
+
+button.sub {
+  background-color: #f9d56e;
+}
+
+button.sub:hover {
+  background-color: #f5c623;
+}
+
+button.res {
+  background-color: #62c1ff;
+}
+
+button.res:hover {
+  background-color: #2491e6;
+}
