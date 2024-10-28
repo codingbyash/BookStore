@@ -1,35 +1,33 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";// env ko import karo
-import cors from "cors"; //different port pe backend aur frontend chalao to fir frontend ka port access mangta hai data ka 
-                        // backend ke peort se, isliye cors error ko resolve karna pdta hai
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
-import bookRoute from "./route/book.route.js";
-import userRoute from "./route/user.route.js";
-
+import bookRoute from './route/book.route.js';
+import userRoute from './route/user.route.js';
+import couponRoute from "./route/coupon.route.js"
+import addressRoute from './route/address.route.js'; // Import address routes
+import blogRoute from "./route/blogRoutes.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 
-dotenv.config(); //env ko config karo
-const PORT = process.env.PORT || 4000; // agar 4001 port(see in .env) busy hai to 4001 port pr chalana
+dotenv.config(); // Configure environment variables
+const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-// connect to mongoDB
-try {
-    mongoose.connect(URI, {
-        useNewUrlParser: true, //atlas use karne pe ye do line nahi likhna hota hai
-        useUnifiedTopology: true,
-    });
-    console.log("Connected to mongoDB");
-} catch (error) {
-    console.log("Error: ", error);
-}
+// Connect to MongoDB
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((error) => console.log('Error connecting to MongoDB:', error));
 
-// defining routes
-app.use("/book", bookRoute);
-app.use("/user", userRoute);
+// Define routes
+app.use('/book', bookRoute);
+app.use('/user', userRoute);
+app.use('/blogs', blogRoute);
+app.use('/coupons', couponRoute); // Use coupon routes
+app.use('/addresses', addressRoute); // Use address routes
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

@@ -1,20 +1,48 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from './Navbar'; // Assuming Nav component is in the same directory
-import Footer from './Footer'; // Assuming Footer component is in the same directory
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'; // For dynamic routes
+import axios from 'axios'; // To fetch book details from the API
+import Navbar from './Navbar'; 
+import Footer from './Footer'; 
 
 function BookDetails() {
-  const book = {  
-    name: "LPU Tales",  
-    title: "This is the Story of My Journey at LPU: A Collection of Inspiring Tales, an adventurous journey, I hope you will enjoy",  
-    price: 0,  
-    category: "Free",  
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794",  
-}
+  const { id } = useParams(); // Get book id from the URL
+  const [book, setBook] = useState(null); // Initialize book state as null
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+
+  useEffect(() => {
+    const fetchBook = async (bookId) => {
+      try {
+        const res = await axios.get(`http://localhost:4002/book/${bookId}`);        
+        setBook(res.data); // Assuming the response contains the book data
+        setError(null);
+      } catch (err) {
+        console.log(err);
+        setError("Failed to fetch book details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) { // Ensure id is defined before fetching
+      fetchBook(id); // Pass the id to the fetchBook function
+    }
+  }, [id]); // Re-fetch when the id changes
+
+  if (loading) {
+    return <p className="text-center">Loading book details...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  if (!book) {
+    return <p className="text-center">No book found!</p>; // Fallback if no book is found
+  }
 
   return (
     <>
-      {/* Include Nav at the top */}
       <Navbar />
 
       <div className="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
@@ -41,22 +69,29 @@ function BookDetails() {
                   <span className="font-semibold">Price:</span> ₹{book.price}
                 </p>
               </div>
-              <div className="mt-8">
-              <a
-                href="https://checkout.stripe.dev/preview" // Stripe Checkout preview link
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 duration-200 transition-colors ease-in-out"
-              >
-                Make Payment
-              </a>
+              <div className="mt-8 flex space-x-4">
+                <a
+                  href="https://checkout.stripe.dev/preview" // Stripe Checkout preview link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 duration-200 transition-colors ease-in-out"
+                >
+                 pay now
+                </a>
+                <a
+                  href={`https://readnow.com/book/${id}`} // Assuming there is a "Read Now" page
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 duration-200 transition-colors ease-in-out"
+                >
+                  Read Now
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Include Footer at the bottom */}
       <Footer />
     </>
   );

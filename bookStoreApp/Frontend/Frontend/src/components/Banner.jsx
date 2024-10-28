@@ -42,7 +42,7 @@ function Banner() {
           <div className="w-full md:w-1/2 mt-12 md:mt-0">
             <img
               src={banner}
-              className="w-full h-[500px] object-cover rounded-lg shadow-lg"
+              className="w-full h-[500px] object-cover rounded-md shadow-lg"
               alt="Banner"
             />
           </div>
