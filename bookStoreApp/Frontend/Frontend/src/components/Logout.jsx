@@ -15,7 +15,7 @@ function Logout() {
 
       setTimeout(() => {
         window.location.reload(); //jaise hi logout ho automatically reload ho jaye , refresh na karna pade
-      }, 3000);
+      }, 2000);
     } catch (error) {
       toast.error("Error: " + error);
       setTimeout(() => {}, 2000);

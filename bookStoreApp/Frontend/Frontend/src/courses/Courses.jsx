@@ -17,7 +17,7 @@ function Courses() {
       <button onClick={() => setCartOpen(true)}>Open Cart ({state.items.length})</button>
       {isCartOpen && <Cart onClose={() => setCartOpen(false)} />} {/* Manage cart visibility */}
       
-      {/* Search Input */}
+      
       <div className="search-container">
         <input
           type="text"

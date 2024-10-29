@@ -21,21 +21,30 @@ function App() {
   return (
     <>
       <div className="dark:bg-gray-800 dark:text-white h-full">
-        <Routes> 
-          <Route path="/" element={<Home />} /> 
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route
             path="/course"
             element={authUser ? <Courses /> : <Navigate to="/signup" />}
           />
-           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/book/:id" element={<BookDetails />} /> {/* Add this route */}
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/cart"
+            element={authUser ? <Cart /> : <Navigate to="/signup" />}
+          />
+            <Route path="/contact" element={<Contact />} />
           <Route path="/blogs" element={<BlogList />} />
-      <Route path="/blogs/:id" element={<BlogDetails />} />
-      <Route path="/add-blog" element={<AddBlog />} />
-      <Route path="/edit-blog/:id" element={<EditBlog />} />
-        </Routes> 
+          <Route path="/blogs/:id" element={<BlogDetails />} />
+          <Route
+            path="/add-blog"
+            element={authUser ? <AddBlog /> : <Navigate to="/signup" />}
+          />
+          <Route
+            path="/edit-blog/:id"
+            element={authUser ? <EditBlog /> : <Navigate to="/signup" />}
+          />
+        </Routes>
         <Toaster />
       </div>
     </>

@@ -37,7 +37,7 @@ const BlogList = () => {
         });
 
         if (response.ok) {
-          setBlogs(blogs.filter(blog => blog._id !== blogToDelete));
+          setBlogs(blogs.filter((blog) => blog._id !== blogToDelete));
           setModalOpen(false);
         } else {
           throw new Error('Failed to delete blog');
@@ -49,28 +49,62 @@ const BlogList = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl text-black container mx-auto md:px-20 px-4 mt-28">
-      <h2 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">Blog List</h2>
-      <Link to="/add-blog" className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition duration-300">
-        Add Blog
-      </Link>
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {blogs.map((blog) => (
-          <div className="bg-white border border-gray-300 rounded-md p-4" key={blog._id}>
-            <h3 className="font-semibold text-lg">{blog.title}</h3>
-            <p>{blog.content.substring(0, 100)}...</p>
-            <Link to={`/blogs/${blog._id}`} className="bg-teal-600 text-white px-2 py-1 rounded-md hover:bg-teal-700 transition duration-300">Read More</Link>
-            <Link to={`/edit-blog/${blog._id}`} className="bg-teal-600 text-white px-2 py-1 rounded-md hover:bg-teal-700 transition duration-300 ml-2">Edit</Link>
-            <button onClick={() => handleDelete(blog._id)} className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 transition duration-300 ml-2">Delete</button>
-          </div>
-        ))}
+    <>
+    <div className="min-h-screen bg-gray-900 text-gray-200 py-12 px-4">
+      <div className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-5xl font-bold text-teal-400 mb-6 text-center">Blog List</h2>
+
+        <div className="flex justify-end mb-6">
+          <Link
+            to="/add-blog"
+            className="bg-teal-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-teal-700 transition duration-300 font-semibold"
+          >
+            + Add Blog
+          </Link>
+        </div>
+
+        <div className="space-y-8">
+          {blogs.map((blog) => (
+            <div
+              key={blog._id}
+              className="bg-gray-800 border border-gray-700 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+            >
+              <h3 className="text-2xl font-semibold text-teal-400 mb-2">{blog.title}</h3>
+              <p className="text-gray-400 mb-4 line-clamp-3">{blog.content}</p>
+              <div className="flex gap-4">
+                <Link
+                  to={`/blogs/${blog._id}`}
+                  className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-300 font-medium"
+                >
+                  Read More
+                </Link>
+                <Link
+                  to={`/edit-blog/${blog._id}`}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-300 font-medium"
+                >
+                  Edit
+                </Link>
+                <button
+                  onClick={() => handleDelete(blog._id)}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300 font-medium"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {isModalOpen && (
+          <ConfirmModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            onConfirm={confirmDelete}
+          />
+        )}
       </div>
-      <ConfirmModal 
-        isOpen={isModalOpen} 
-        onClose={() => setModalOpen(false)} 
-        onConfirm={confirmDelete} 
-      />
     </div>
+    </>
   );
 };
 

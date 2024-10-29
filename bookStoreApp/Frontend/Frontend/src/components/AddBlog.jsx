@@ -32,32 +32,45 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 mt-28 text-center">
-      <h2 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">Add Blog</h2>
-      <form onSubmit={handleSubmit} className="mt-6">
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300">Title:</label>
-          <input 
-            type="text" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)} 
-            required 
-            className="border text-black rounded-md px-4 py-2 w-full" 
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300">Content:</label>
-          <textarea 
-            value={content} 
-            onChange={(e) => setContent(e.target.value)} 
-            required 
-            className="border text-black rounded-md px-4 py-2 w-full" 
-          />
-        </div>
-        <button type="submit" className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition duration-300">
-          Add Blog
-        </button>
-      </form>
+    <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-200 py-16 px-4">
+      <div className="w-full max-w-2xl bg-gray-800 rounded-lg shadow-lg p-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-teal-400">
+          Add New Blog
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-lg font-semibold mb-2 text-gray-300">
+              Title:
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="border border-gray-700 bg-gray-700 text-gray-200 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="Enter blog title"
+            />
+          </div>
+          <div>
+            <label className="block text-lg font-semibold mb-2 text-gray-300">
+              Content:
+            </label>
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+              className="border border-gray-700 bg-gray-700 text-gray-200 rounded-md px-4 py-2 w-full h-40 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="Write your blog content here..."
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-teal-600 text-white font-semibold py-3 rounded-md hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-teal-500"
+          >
+            Add Blog
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

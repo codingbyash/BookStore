@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import axios from 'axios';
 const CartContext = createContext();
+import toast, { Toaster } from 'react-hot-toast';
 
 // Load initial cart state from local storage if available
 const initialState = {
@@ -99,9 +100,17 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: "UPDATE_TOTAL_PRICE" });
   }, [state.items]);
 
-  const addToCart = (item) => dispatch({ type: "ADD_TO_CART", payload: item });
-  const removeFromCart = (id) => dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
-  const incrementQuantity = (id) => dispatch({ type: "INCREMENT_QUANTITY", payload: { id } });
+  const addToCart = (item) => {
+    dispatch({ type: "ADD_TO_CART", payload: item });
+    toast.success(`${item.name} added to cart`);
+  };
+
+  const removeFromCart = (id) => {
+    const item = state.items.find(item => item._id === id);
+    dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
+    toast.error(`${item?.name || 'Item'} removed from cart`);
+  };
+    const incrementQuantity = (id) => dispatch({ type: "INCREMENT_QUANTITY", payload: { id } });
   const decrementQuantity = (id) => dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
   
 
