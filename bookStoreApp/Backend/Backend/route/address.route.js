@@ -1,10 +1,9 @@
-import express from 'express';
-import { createAddress, getAddressesByUserId, getAddressById } from "../controller/address.controller.js"
+// routes/address.route.js  
+import express from 'express';  
+import saveAddress from "../controller/address.controller.js"
 
-const router = express.Router();
+const router = express.Router();  
 
-router.post('/', createAddress); // Create a new address
-router.get('/:userId', getAddressesByUserId); // Get all addresses for a specific user
-router.get('/:id', getAddressById); // Get a single address by ID
+router.post('/', saveAddress);  
 
 export default router;

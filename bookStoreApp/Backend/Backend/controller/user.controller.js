@@ -1,25 +1,36 @@
-import User from "../model/user.model.js";
-import bcryptjs from "bcryptjs"; //password ko chhupane ke liye
-export const signup = async(req, res) => {
+import User from '../model/user.model.js'; // Import the User model
+import bcryptjs from 'bcryptjs'; // Import bcryptjs for password hashing
+import generateToken from '../utils/auth.js'; // Import the JWT function
+
+// Signup function
+export const signup = async (req, res) => {
     try {
         const { fullname, email, password } = req.body;
-        const user = await User.findOne({ email });
-        if (user) {
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
         }
-        const hashPassword = await bcryptjs.hash(password, 10); // password ko secure kar rhe hai
-        const createdUser = new User({ //body se aaye hue data se user create kar rhe hain
-            fullname: fullname,
-            email: email,
-            password: hashPassword, //pehle yaha password tha to dikh rha tha database mei but ab hashpassword likha to decrypted dikh rha hai
+
+        // Hash the password
+        const hashedPassword = await bcryptjs.hash(password, 10);
+
+        // Create a new user
+        const user = await User.create({
+            fullname,
+            email,
+            password: hashedPassword,
         });
-        await createdUser.save();
+
+        const token = generateToken(user); // Generate token
         res.status(201).json({
             message: "User created successfully",
+            token,
             user: {
-                _id: createdUser._id,
-                fullname: createdUser.fullname,
-                email: createdUser.email,
+                _id: user._id,
+                fullname: user.fullname,
+                email: user.email,
             },
         });
     } catch (error) {
@@ -27,25 +38,46 @@ export const signup = async(req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
-//ISSE UPAR SARA KAAM SIGNUP KA HUA HAI AB ISSE NEECHE LOGIN KA HOGA
-export const login = async(req, res) => {
+
+// Login function
+export const login = async (req, res) => {
     try {
-        const { email, password } = req.body; //LOGIN ke time bass email pass chiye
+        const { email, password } = req.body;
         const user = await User.findOne({ email });
-        const isMatch = await bcryptjs.compare(password, user.password);// password match kar rhe hai database se || 
-        // await use karna is must bcoz jabtak response nahi aa jata tabtak hold karke rakho
-        if (!user || !isMatch) {
+
+        if (!user || !(await bcryptjs.compare(password, user.password))) {
             return res.status(400).json({ message: "Invalid username or password" });
-        } else {
-            res.status(200).json({
-                message: "Login successful",
-                user: { //ye sab send kar rhe hai kyuki iska kaam karege frontend mei
-                    _id: user._id,
-                    fullname: user.fullname,
-                    email: user.email,
-                },
-            });
         }
+
+        const token = generateToken(user); // Generate token
+        res.status(200).json({
+            message: "Login successful",
+            token, // Send token back to client
+            user: {
+                _id: user._id,
+                fullname: user.fullname,
+                email: user.email,
+            },
+        });
+    } catch (error) {
+        console.log("Error: " + error.message);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+// Fetch user profile function
+export const fetchUserProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id); // Access user ID from the request
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+            _id: user._id,
+            fullname: user.fullname,
+            email: user.email,
+            // Any other user details you want to send back
+        });
     } catch (error) {
         console.log("Error: " + error.message);
         res.status(500).json({ message: "Internal server error" });

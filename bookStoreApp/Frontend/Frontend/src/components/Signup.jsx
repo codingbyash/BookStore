@@ -16,28 +16,31 @@ function Signup() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const userInfo = {
+// frontend/src/components/Signup.jsx
+const onSubmit = async (data) => {
+  const userInfo = {
       fullname: data.fullname,
       email: data.email,
       password: data.password,
-    };
-
-    try {
-      const res = await axios.post("http://localhost:4002/user/signup", userInfo);
-      console.log(res.data);
-      if (res.data) {
-        toast.success("Signup Successfully");
-        navigate(from, { replace: true });
-        localStorage.setItem("Users", JSON.stringify(res.data.user));
-      }
-    } catch (err) {
-      if (err.response) {
-        console.log(err);
-        toast.error("Error: " + err.response.data.message);
-      }
-    }
   };
+
+  try {
+    const res = await axios.post("http://localhost:4002/user/signup", userInfo);
+    console.log(res.data);
+    if (res.data.token) { // Check for the token in the response
+      toast.success("Signup Successfully");
+      localStorage.setItem("token", res.data.token); // Store the token in local storage
+      localStorage.setItem("Users", JSON.stringify(res.data.user)); // Store user info
+      navigate(from, { replace: true });
+    }
+  } catch (err) {
+    if (err.response) {
+      console.log(err);
+      toast.error("Error: " + err.response.data.message);
+    }
+  }
+};
+
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">

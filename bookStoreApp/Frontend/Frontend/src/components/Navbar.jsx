@@ -5,7 +5,7 @@ import Logout from "./Logout";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useCart } from "../context/CartContext";
-import { FiShoppingCart } from "react-icons/fi"; // Importing a cart icon from react-icons
+import { FiShoppingCart, FiUser } from "react-icons/fi"; // Importing a cart icon from react-icons
 
 function Navbar() {
   const [authUser, setAuthUser] = useAuth();
@@ -13,6 +13,7 @@ function Navbar() {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const element = document.documentElement;
 
   // Theme toggling logic
@@ -45,6 +46,7 @@ function Navbar() {
     };
   }, []);
 
+
   const navItems = (
     <>
       <li><Link to="/">Home</Link></li>
@@ -59,8 +61,8 @@ function Navbar() {
       <div
         className={` max-w-screen-2xl container mx-auto md:px-20 px-4 dark:bg-slate-800 dark:text-white fixed top-0 left-0 right-0 z-50
            ${sticky ? "sticky-navbar shadow-md bg-base-200 dark:bg-slate-700 dark:text-white duration-300 transition-all ease-in-out"
-                    : ""
-           }`
+            : ""
+          }`
         }
       >
         <div className="navbar ">
@@ -126,9 +128,34 @@ function Navbar() {
 
             {/* Cart Icon with Item Count */}
             <Link to="/cart" className="flex items-center gap-2">
-  <FiShoppingCart className="text-2xl cursor-pointer" />
-  <span className="text-sm font-medium">{state.items.length}</span>
-</Link>
+              <FiShoppingCart className="text-2xl cursor-pointer" />
+              <span className="text-sm font-medium">{state.items.length}</span>
+            </Link>
+            <div className="relative">
+              <FiUser
+                className="text-2xl cursor-pointer"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              />
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-gray-300 rounded-md shadow-lg z-50">
+                  <ul className="py-2">
+                    <li>
+                      <Link to="/profile" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700">Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/orders" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700">Orders</Link>
+                    </li>
+                    <li>
+                      <Link to="/settings" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700">Settings</Link>
+                    </li>
+                    <li>
+                      <Link to="/logout" className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700">Logout</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+
 
             <label className="swap swap-rotate">
               <input

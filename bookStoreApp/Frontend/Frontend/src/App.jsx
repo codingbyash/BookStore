@@ -11,6 +11,8 @@ import BlogDetails from "./components/BlogDetails";
 import BlogList from "./components/BlogList";
 import EditBlog from "./components/EditBlog";
 import AddBlog from "./components/AddBlog";
+import Profile from "./components/Profile";
+import Order from "./components/Order";
 
 import Cart from "./components/Cart";
 
@@ -33,7 +35,7 @@ function App() {
             path="/cart"
             element={authUser ? <Cart /> : <Navigate to="/signup" />}
           />
-            <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/blogs" element={<BlogList />} />
           <Route path="/blogs/:id" element={<BlogDetails />} />
           <Route
@@ -44,7 +46,11 @@ function App() {
             path="/edit-blog/:id"
             element={authUser ? <EditBlog /> : <Navigate to="/signup" />}
           />
-        </Routes>
+           <Route path="/profile"
+            element={authUser ?<Profile />: <Navigate to = "/signup"/>} />
+           <Route path="/orders"
+            element={authUser ?<Order />: <Navigate to = "/signup"/>} />
+                 </Routes>
         <Toaster />
       </div>
     </>

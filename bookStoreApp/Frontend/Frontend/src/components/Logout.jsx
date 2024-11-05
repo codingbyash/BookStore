@@ -4,23 +4,22 @@ import toast from "react-hot-toast";
 
 function Logout() {
   const [authUser, setAuthUser] = useAuth(); //context se user le rhe hain
-  const handleLogout = () => {
-    try {
-      setAuthUser({ //setAuthUser ke state ko change kar rhe hain
-        ...authUser,
-        user: null,
-      });
-      localStorage.removeItem("Users"); //logout karte hi localstorage se hatana hoga user ko
-      toast.success("Logout successfully"); //message print karoge
+// frontend/src/components/Logout.jsx
+const handleLogout = () => {
+  try {
+    setAuthUser({ user: null });
+    localStorage.removeItem("Users");
+    localStorage.removeItem("token"); // Remove the token on logout
+    toast.success("Logout successfully");
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  } catch (error) {
+    toast.error("Error: " + error);
+  }
+};
 
-      setTimeout(() => {
-        window.location.reload(); //jaise hi logout ho automatically reload ho jaye , refresh na karna pade
-      }, 2000);
-    } catch (error) {
-      toast.error("Error: " + error);
-      setTimeout(() => {}, 2000);
-    }
-  };
+
   return (
     <div>
       <button
