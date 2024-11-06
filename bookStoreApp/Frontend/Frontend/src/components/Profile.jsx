@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar'; // Import Sidebar component
-import Order from './Order'; // Import Order component
+import Order from './OrdersPage'; // Import Order component
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);

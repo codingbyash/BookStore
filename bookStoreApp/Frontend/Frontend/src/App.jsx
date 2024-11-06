@@ -12,13 +12,17 @@ import BlogList from "./components/BlogList";
 import EditBlog from "./components/EditBlog";
 import AddBlog from "./components/AddBlog";
 import Profile from "./components/Profile";
-import Order from "./components/Order";
+import CheckoutSummary from "./components/CheckoutSummary";
+import ThankYouPage from "./components/ThankYouPage";
+// import OrderDetailsPage from "./components/OrderDetailsPage";
+// import OrdersPage from "./components/OrdersPage";
 
 import Cart from "./components/Cart";
 
 function App() {
   const [authUser, setAuthUser] = useAuth();
   console.log(authUser);
+  
 
   return (
     <>
@@ -46,11 +50,18 @@ function App() {
             path="/edit-blog/:id"
             element={authUser ? <EditBlog /> : <Navigate to="/signup" />}
           />
-           <Route path="/profile"
-            element={authUser ?<Profile />: <Navigate to = "/signup"/>} />
-           <Route path="/orders"
-            element={authUser ?<Order />: <Navigate to = "/signup"/>} />
-                 </Routes>
+          <Route path="/profile"
+            element={authUser ? <Profile /> : <Navigate to="/signup" />} />
+         
+
+          <Route path="/checkout-summary" element={<CheckoutSummary />} />
+          <Route path="/thank-you" element={<ThankYouPage authUser={authUser} />} />
+          {/* <Route path="/orders"
+            element={authUser ? <OrdersPage /> : <Navigate to="/signup" />} />
+          <Route path="/order-details/:orderId"
+            element={authUser ? <OrderDetailsPage /> : <Navigate to="/signup" />} /> */}
+        </Routes>
+
         <Toaster />
       </div>
     </>

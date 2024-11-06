@@ -8,6 +8,7 @@ import userRoute from './route/user.route.js';
 import couponRoute from "./route/coupon.route.js"
 // import addressRoute from "./route/address.route.js"
 import blogRoute from "./route/blogRoutes.js";
+import orderRoutes from "./route/order.route.js"
 
 
 
@@ -30,6 +31,7 @@ app.use('/book', bookRoute);
 app.use('/user', userRoute);
 app.use('/blogs', blogRoute);
 app.use('/coupons', couponRoute); // Use coupon routes
+app.use('/api', orderRoutes);
 // app.use('/addresses', addressRoute); // Use address routes
 
 app.listen(PORT, () => {

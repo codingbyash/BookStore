@@ -1,9 +1,8 @@
-// routes/order.route.js
 import express from 'express';
-import { createOrder } from '../controller/order.controller'; // Adjust the path as necessary
+import { createOrder } from '../controller/order.controller.js';
+
 const router = express.Router();
 
-// Define the POST route for creating an order
-router.post('/', createOrder);
+router.post('/orders', createOrder);
 
 export default router;
