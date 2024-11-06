@@ -26,7 +26,9 @@ function Freebook() {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+    rows: 1, // Added rows setting to show two rows of items
+    slidesPerRow: 2, // Number of items per row
     responsive: [
       {
         breakpoint: 1024,
@@ -35,6 +37,8 @@ function Freebook() {
           slidesToScroll: 3,
           infinite: true,
           dots: true,
+          rows: 2, // For larger screens, keep two rows
+          slidesPerRow: 3, // 3 items per row
         },
       },
       {
@@ -43,6 +47,8 @@ function Freebook() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          rows: 2, // On medium screens, maintain two rows
+          slidesPerRow: 2, // 2 items per row
         },
       },
       {
@@ -50,6 +56,8 @@ function Freebook() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          rows: 1, // For small screens, show one row
+          slidesPerRow: 1, // 1 item per row
         },
       },
     ],

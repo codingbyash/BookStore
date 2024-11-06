@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import Navbar from './Navbar';
 
 function ThankYouPage({ authUser }) {
   const { state } = useLocation();
@@ -58,37 +59,47 @@ function ThankYouPage({ authUser }) {
   };
 
   return (
-    <div className="thank-you-page">
-      <h2 className="text-3xl font-bold mb-4 text-center">Thank You for Your Order!</h2>
-      <p className="text-lg text-center mb-6">Your order has been successfully placed. Below are your order details.</p>
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-800 min-h-screen flex flex-col items-center justify-center py-8 px-4">
+        <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg w-full max-w-4xl p-8 space-y-6">
+          <h2 className="text-4xl font-semibold text-center text-indigo-600 dark:text-indigo-400">
+            Thank You for Your Order!
+          </h2>
+          <p className="text-lg text-center text-gray-700 dark:text-gray-300">
+            Your order has been successfully placed. Below are your order details.
+          </p>
 
-      <div className="order-details">
-        <h3 className="font-semibold text-lg">Order Summary</h3>
-        <p><strong>Order ID:</strong> {order._id}</p>
-        <p><strong>Total Amount:</strong> ${order.totalAmount.toFixed(2)}</p>
-        <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
-      </div>
+          <div className="order-details p-4 bg-gray-100 dark:bg-gray-700 rounded-md shadow-md">
+            <h3 className="font-semibold text-xl text-gray-800 dark:text-gray-200">Order Summary</h3>
+            <p className="text-gray-700 dark:text-gray-300"><strong>Order ID:</strong> {order._id}</p>
+            <p className="text-gray-700 dark:text-gray-300"><strong>Total Amount:</strong> ${order.totalAmount.toFixed(2)}</p>
+            <p className="text-gray-700 dark:text-gray-300"><strong>Payment Method:</strong> {order.paymentMethod}</p>
+          </div>
 
-      <div className="order-items mt-4">
-        <h4 className="font-semibold text-lg">Items</h4>
-        <ul>
-          {order.items.map(item => (
-            <li key={item._id} className="mb-2">
-              <span>{item.title} (x{item.quantity}) - ${item.price.toFixed(2)} each</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div className="order-items mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-md shadow-md">
+            <h4 className="font-semibold text-lg text-gray-800 dark:text-gray-200">Items</h4>
+            <ul className="space-y-2">
+              {order.items.map(item => (
+                <li key={item._id} className="flex justify-between text-gray-700 dark:text-gray-300">
+                  <span>{item.title} (x{item.quantity})</span>
+                  <span>${item.price.toFixed(2)} each</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div className="text-center mt-6">
-        <button
-          onClick={printReceipt}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
-        >
-          Print Receipt
-        </button>
+          <div className="text-center mt-6">
+            <button
+              onClick={printReceipt}
+              className="bg-indigo-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 transition duration-200"
+            >
+              Print Receipt
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

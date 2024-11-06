@@ -1,46 +1,46 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const location = useLocation();
 
-// frontend/src/components/Login.jsx
-const onSubmit = async (data) => {
-  const userInfo = {
+  const onSubmit = async (data) => {
+    const userInfo = {
       email: data.email,
       password: data.password,
+    };
+    await axios
+      .post("http://localhost:4002/user/login", userInfo)
+      .then((res) => {
+        if (res.data.token) {
+          toast.success("Logged in Successfully");
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("Users", JSON.stringify(res.data.user));
+          document.getElementById("my_modal_3").close();
+
+          const from = location.state?.from?.pathname || "/";
+          navigate(from, { replace: true });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error("Error: " + err.response.data.message);
+        }
+      });
   };
-  await axios
-    .post("http://localhost:4002/user/login", userInfo)
-    .then((res) => {
-      console.log(res.data);
-      if (res.data.token) { // Check for the token in the response
-        toast.success("Logged in Successfully");
-        localStorage.setItem("token", res.data.token); // Store the token in local storage
-        localStorage.setItem("Users", JSON.stringify(res.data.user)); // Store user info
-        document.getElementById("my_modal_3").close();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      }
-    })
-    .catch((err) => {
-      if (err.response) {
-        console.log(err);
-        toast.error("Error: " + err.response.data.message);
-      }
-    });
-};
-
-
-
 
   return (
     <div>
+      {/* Ensure <dialog> is not inside <p> or any invalid parent */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box p-6 bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded-lg shadow-lg">
           <form onSubmit={handleSubmit(onSubmit)} method="dialog">
@@ -52,17 +52,18 @@ const onSubmit = async (data) => {
               ✕
             </Link>
 
-            <h3 className="font-bold text-2xl mb-4">Login</h3>
+            <h3 className="font-bold text-2xl mb-6 text-gray-800 dark:text-white">Login</h3>
 
-            <div className="mt-4 space-y-4">
-              <label className="block text-sm font-medium" htmlFor="email">
+            {/* Email Input */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="email">
                 Email
               </label>
               <input
                 type="email"
                 id="email"
                 placeholder="Enter your email"
-                className="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-teal-500"
                 {...register("email", { required: true })}
               />
               {errors.email && (
@@ -70,15 +71,16 @@ const onSubmit = async (data) => {
               )}
             </div>
 
-            <div className="mt-4 space-y-4">
-              <label className="block text-sm font-medium" htmlFor="password">
+            {/* Password Input */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="password">
                 Password
               </label>
               <input
                 type="password"
                 id="password"
                 placeholder="Enter your password"
-                className="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-teal-500"
                 {...register("password", { required: true })}
               />
               {errors.password && (
@@ -86,11 +88,15 @@ const onSubmit = async (data) => {
               )}
             </div>
 
-            <div className="flex justify-between items-center mt-6">
-              <button className="bg-pink-500 text-white rounded-md px-4 py-2 hover:bg-pink-700 duration-300">
+            {/* Submit Button and SignUp Link */}
+            <div className="flex justify-between items-center">
+              <button
+                type="submit"
+                className="bg-teal-500 text-white rounded-md px-4 py-2 hover:bg-teal-700 duration-300"
+              >
                 Login
               </button>
-              <p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Not registered?{" "}
                 <Link
                   to="/signup"

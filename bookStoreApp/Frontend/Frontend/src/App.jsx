@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Courses from "./courses/Courses";
 import Contact from "./components/Contact";
 import Signup from "./components/Signup";
-import BookDetails from "./components/BookDetails"; // Import the BookDetails component
+import BookDetails from "./components/BookDetails"; 
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./context/AuthProvider";
 import BlogDetails from "./components/BlogDetails";
@@ -14,57 +14,51 @@ import AddBlog from "./components/AddBlog";
 import Profile from "./components/Profile";
 import CheckoutSummary from "./components/CheckoutSummary";
 import ThankYouPage from "./components/ThankYouPage";
-// import OrderDetailsPage from "./components/OrderDetailsPage";
-// import OrdersPage from "./components/OrdersPage";
-
 import Cart from "./components/Cart";
+import PrivateRoute from "./components/privateRoute";// New PrivateRoute component
 
 function App() {
   const [authUser, setAuthUser] = useAuth();
   console.log(authUser);
-  
 
   return (
-    <>
-      <div className="dark:bg-gray-800 dark:text-white h-full">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/course"
-            element={authUser ? <Courses /> : <Navigate to="/signup" />}
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/book/:id" element={<BookDetails />} /> {/* Add this route */}
-          <Route
-            path="/cart"
-            element={authUser ? <Cart /> : <Navigate to="/signup" />}
-          />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blogs" element={<BlogList />} />
-          <Route path="/blogs/:id" element={<BlogDetails />} />
-          <Route
-            path="/add-blog"
-            element={authUser ? <AddBlog /> : <Navigate to="/signup" />}
-          />
-          <Route
-            path="/edit-blog/:id"
-            element={authUser ? <EditBlog /> : <Navigate to="/signup" />}
-          />
-          <Route path="/profile"
-            element={authUser ? <Profile /> : <Navigate to="/signup" />} />
-         
+    <div className="dark:bg-gray-800 dark:text-white h-full">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        
+        <Route
+          path="/course"
+          element={<PrivateRoute authUser={authUser}><Courses /></PrivateRoute>}
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/book/:id" element={<BookDetails />} />
+        
+        <Route
+          path="/cart"
+          element={<PrivateRoute authUser={authUser}><Cart /></PrivateRoute>}
+        />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
+        
+        <Route
+          path="/add-blog"
+          element={<PrivateRoute authUser={authUser}><AddBlog /></PrivateRoute>}
+        />
+        <Route
+          path="/edit-blog/:id"
+          element={<PrivateRoute authUser={authUser}><EditBlog /></PrivateRoute>}
+        />
+        <Route 
+          path="/profile"
+          element={<PrivateRoute authUser={authUser}><Profile /></PrivateRoute>}
+        />
+        <Route path="/checkout-summary" element={<CheckoutSummary />} />
+        <Route path="/thank-you" element={<ThankYouPage authUser={authUser} />} />
+      </Routes>
 
-          <Route path="/checkout-summary" element={<CheckoutSummary />} />
-          <Route path="/thank-you" element={<ThankYouPage authUser={authUser} />} />
-          {/* <Route path="/orders"
-            element={authUser ? <OrdersPage /> : <Navigate to="/signup" />} />
-          <Route path="/order-details/:orderId"
-            element={authUser ? <OrderDetailsPage /> : <Navigate to="/signup" />} /> */}
-        </Routes>
-
-        <Toaster />
-      </div>
-    </>
+      <Toaster />
+    </div>
   );
 }
 
