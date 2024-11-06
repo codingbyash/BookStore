@@ -70,9 +70,9 @@ function Freebook() {
           <h1 className="font-semibold text-2xl md:text-3xl mb-4 text-gray-900 dark:text-gray-100">
             Free Offered <span className="text-teal-600">Books</span>
           </h1>
-          <p className="text-gray-700 dark:text-gray-300">
+          {/* <p className="text-gray-700 dark:text-gray-300">
             Please take a moment to look at the books below; they offer valuable insights and knowledge on various fascinating topics. These books are really amazing. Kindly take a moment to look at these extremely knowledgeable and beautiful books.
-          </p>
+          </p> */}
         </div>
 
         <div className="slider-container">

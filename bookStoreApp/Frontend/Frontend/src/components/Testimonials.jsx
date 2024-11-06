@@ -1,5 +1,5 @@
 import React from "react";
-// import testimonialImage from "../../public/TestimonialsImage.jpg"; // Replace with your actual image
+import testimonialImage from "../../public/testimonialImage.jpg" // Replace with your actual image
 
 function Testimonials() {
   return (
@@ -21,7 +21,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
                 alt="Customer 1"
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -40,7 +40,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
                 alt="Customer 2"
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -59,7 +59,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
                 alt="Customer 3"
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -78,7 +78,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
                 alt="Customer 4"
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -97,7 +97,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
 
                 alt="Customer 5"
                 className="w-16 h-16 rounded-full object-cover"
@@ -117,7 +117,7 @@ function Testimonials() {
           <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <img
-               //  src={testimonialImage}
+                src={testimonialImage}
                 alt="Customer 6"
                 className="w-16 h-16 rounded-full object-cover"
               />

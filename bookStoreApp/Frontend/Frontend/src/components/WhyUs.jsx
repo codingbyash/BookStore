@@ -1,5 +1,5 @@
 import React from "react";
-// import whyUsBanner from "../../public/WhyUsBanner.jpg"; // Replace with your actual image
+import whyUsBanner from "../../public/WhyUsBanner.jpg"; // Replace with your actual image
 
 function WhyUs() {
   return (
@@ -112,7 +112,7 @@ function WhyUs() {
           {/* Right Section: Image */}
           <div className="w-full md:w-1/2">
             <img
-          //     src={whyUsBanner}
+              src={whyUsBanner}
               className="w-full h-[500px] object-cover rounded-lg shadow-2xl"
               alt="Why Us Banner"
             />
