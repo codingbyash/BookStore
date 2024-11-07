@@ -9,7 +9,6 @@ import bookRoute from './route/book.route.js';
 import userRoute from './route/user.route.js';
 import couponRoute from "./route/coupon.route.js";
 import blogRoute from "./route/blogRoutes.js";
-import orderRoutes from "./route/order.route.js";
 
 const app = express();
 app.use(cors());
@@ -29,7 +28,6 @@ app.use('/book', bookRoute);
 app.use('/user', userRoute);
 app.use('/blogs', blogRoute);
 app.use('/coupons', couponRoute);
-app.use('/api', orderRoutes);
 
 // Serve static files from the frontend build directory
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
