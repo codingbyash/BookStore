@@ -33,11 +33,11 @@ app.use('/api', orderRoutes);
 
 // Serve static files from the frontend build directory
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "frontend", "build")));
+app.use(express.static(path.resolve(__dirname, "Frontend", "build")));
 
 // Serve the React app for any other route
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "Frontend", "build", "index.html"));
 });
 
 app.listen(PORT, () => {
