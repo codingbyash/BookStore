@@ -24,18 +24,18 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((error) => console.log('Error connecting to MongoDB:', error));
 
-// Define routes
+// Define routes for API
 app.use('/book', bookRoute);
 app.use('/user', userRoute);
 app.use('/blogs', blogRoute);
 app.use('/coupons', couponRoute);
 app.use('/api', orderRoutes);
 
-// Serve the React app's static files
+// Serve the React app's static files (Make sure React build folder is properly referenced)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, '../Frontend/build')));
 
-// Route to serve index.html
+// Catch-all route to serve index.html for frontend
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
 });
