@@ -18,7 +18,7 @@ function CheckoutSummary() {
       items: cartItems,
     };
     if (paymentMethod === 'Online') {
-      window.location.href = 'https://checkout.stripe.dev/preview';
+      window.location.href = 'https://buy.stripe.com/test_aEU9B9exu72m8uY288';
     } else {
       // Otherwise, navigate to the Thank You page
       navigate('/thank-you', { state: { order } });
